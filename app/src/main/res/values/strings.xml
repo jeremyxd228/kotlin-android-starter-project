@@ -1,3 +1,12 @@
+<!-- res/values/strings.xml -->
 <resources>
-    <string name="app_name">Sample Project</string>
+    <string name="app_name">CaptchaAuto</string>
+
+    <!-- Название сервиса в настройках → Специальные возможности -->
+    <string name="accessibility_service_label">Captcha Auto Input</string>
+
+    <!-- Описание, которое пользователь видит перед включением сервиса -->
+    <string name="accessibility_service_description">
+        Автоматически вводит код капчи в игре Arizona RP Mobile
+    </string>
 </resources>
