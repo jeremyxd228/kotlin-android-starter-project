@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    package="dev.fursik.app">
+
+    <!-- Разрешение на привязку Accessibility Service (системное, не запрашивается у пользователя) -->
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:ignore="ProtectedPermissions" />
 
     <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AppTheme"
-        tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AppTheme"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+        android:allowBackup="false"
+        android:label="@string/app_name">
 
+        <!--
+            AccessibilityService.
+            exported="false" — сервис не доступен другим приложениям напрямую.
+            Запускается только через Intent от нашего CaptchaReceiver.
+        -->
+        <service
+            android:name=".CaptchaAccessibilityService"
+            android:exported="false"
+            android:label="@string/accessibility_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!--
+            BroadcastReceiver для приёма Explicit Intent от Lua.
+            exported="true" обязательно — иначе внешний am broadcast
+            не сможет доставить интент (Android 12+).
+            Защита через явную проверку action в коде ресивера.
+        -->
+        <receiver
+            android:name=".CaptchaReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="dev.fursik.AUTO_ENTER" />
+            </intent-filter>
+        </receiver>
+
+    </application>
 </manifest>
