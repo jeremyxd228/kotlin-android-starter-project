@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath("com.diffplug.spotless:spotless-plugin-gradle:6.19.0")
+        // Удалили classpath Spotless, чтобы он больше не мешал
     }
 }
 
@@ -12,15 +12,9 @@ plugins {
     id("com.android.application") version "8.0.2" apply false
     id("com.android.library") version "8.0.2" apply false
     id("org.jetbrains.kotlin.android") version "1.8.20" apply false
-    id("com.diffplug.spotless") version "6.19.0" apply false
-
 }
 
-subprojects {
-    afterEvaluate {
-        project.apply("../spotless.gradle")
-    }
-}
+// Блок subprojects полностью удален
 
 task("addPreCommitGitHookOnBuild") {
     println("⚈ ⚈ ⚈ Running Add Pre Commit Git Hook Script on Build ⚈ ⚈ ⚈")
