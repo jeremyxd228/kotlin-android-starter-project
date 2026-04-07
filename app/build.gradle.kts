@@ -9,7 +9,7 @@ val versionPatch = 0
 val versionBuild = 0 // Bump for dogfood builds, public betas, etc.
 
 // 1. ИЗМЕНИЛИ ИМЯ ПАКЕТА НА ТВОЕ
-val bundleId = "dev.fursik.app"
+val bundleId = "com.delasign.samplestarterproject"
 
 android {
     namespace = bundleId
@@ -48,10 +48,7 @@ android {
         }
     }
 
-    // 2. ДОБАВИЛИ ОТКЛЮЧЕНИЕ ОШИБОК LINT
-    lint {
-        abortOnError = false
-    }
+    
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
